@@ -25,11 +25,17 @@ M.create_cubit = function(feature_name, path)
 		snake_case_feature_name .. "_state.dart",
 	}
 
-	for i, file in ipairs(files) do
-		local file_path = path .. cubit_directory .. file
-		local file_template = templates[i]
+	-- Map template names to their content for correct lookup
+	local template_contents = {
+		[files[1]] = templates.cubit_template,
+		[files[2]] = templates.cubit_state,
+	}
 
-		utils.write_to_file(file_path, file_template)
+	for _, file in ipairs(files) do
+		local file_path = path .. cubit_directory .. file
+		local file_content = template_contents[file]
+
+		utils.write_to_file(file_path, file_content)
 	end
 end
 

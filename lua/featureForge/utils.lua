@@ -13,7 +13,7 @@ end
 local function get_root_directory()
 	local current_buff_directory = vim.fn.expand("%:p:h")
 
-	local max_depth = 5
+	local max_depth = 15
 	local count = 0
 
 	while current_buff_directory ~= "/" and count <= max_depth do
@@ -76,9 +76,17 @@ function M.get_package_name()
 end
 
 function M.write_to_file(path, content)
+	-- Extract directory path
+	local dir_path = vim.fn.fnamemodify(path, ":h")
+
+	-- Create directory if it doesn't exist
+	if vim.fn.isdirectory(dir_path) == 0 then
+		vim.fn.mkdir(dir_path, "p")
+	end
+
 	local feature_file = io.open(path, "w")
 	if feature_file == nil then
-		error("Could not create file")
+		error("Could not create file: " .. path)
 	end
 	feature_file:write(content)
 	feature_file:close()
