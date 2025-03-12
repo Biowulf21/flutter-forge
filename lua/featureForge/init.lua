@@ -38,8 +38,31 @@ function M.createFeature()
 
 	print("Feature created successfully!")
 
-	-- Open the the created page file
+	-- Open the created page file
 	vim.cmd("e " .. view_path)
+
+	-- Get the project root directory for running dart fix
+	local root_dir = utils.get_root_directory()
+
+	-- run dart fix --apply in the project root directory
+	print("Running dart fix --apply")
+
+	local job_id = vim.fn.jobstart("cd " .. root_dir .. " && dart fix --apply", {
+		on_exit = function(_, exit_code, _)
+			if exit_code == 0 then
+				print("Dart fix completed successfully")
+			else
+				print("Dart fix failed with exit code: " .. exit_code)
+			end
+		end,
+	})
+
+	-- Check if job started successfully
+	if job_id == 0 then
+		print("Error: Invalid arguments for job")
+	elseif job_id == -1 then
+		print("Error: Command not executable")
+	end
 end
 
 return M
