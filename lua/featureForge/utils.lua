@@ -1,4 +1,3 @@
-local yaml = require("lyaml")
 local M = {}
 
 function M.convert_to_snake_case(input)
@@ -38,10 +37,19 @@ local function find_value_in_yaml_file(path, key)
 
 	local content = file:read("*a")
 	file:close()
-	local yaml_data = yaml.load(content)
 
-	if yaml_data == nil then
-		return nil
+	-- Simple YAML parser for key-value pairs at the root level
+	local yaml_data = {}
+	for line in content:gmatch("[^\r\n]+") do
+		-- Skip comments and empty lines
+		if not line:match("^%s*#") and line:match("%S") then
+			local k, v = line:match("^%s*(%S+)%s*:%s*(.+)%s*$")
+			if k and v then
+				-- Remove quotes from value if present
+				v = v:gsub('^"(.-)"$', "%1"):gsub("^'(.-)'$", "%1")
+				yaml_data[k] = v
+			end
+		end
 	end
 
 	return yaml_data[key]
