@@ -67,10 +67,10 @@ function M.get_package_name()
 	return find_value_in_yaml_file(root_directory .. "/pubspec.yaml", "name")
 end
 
-function M.create_feature_file(path, content)
+function M.write_to_file(path, content)
 	local feature_file = io.open(path, "w")
 	if feature_file == nil then
-		error("Could not create feature file")
+		error("Could not create file")
 	end
 	feature_file:write(content)
 	feature_file:close()

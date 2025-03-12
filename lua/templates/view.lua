@@ -1,5 +1,9 @@
 local M = {}
 
+function M.create_view(feature_name, feature_name_lowercase, feature_path, project_name)
+	return M.view_template()
+end
+
 M.view_template = [[
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';

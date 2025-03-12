@@ -1,5 +1,10 @@
 local utils = require("featureForge.utils")
+local cubit = require("templates.cubit")
 local M = {}
+
+local features_directory = "features/"
+local view_directory = "view/"
+local repository_directory = "data/repository/"
 
 function M.createFeature()
 	local is_flutter_project = utils.check_if_flutter_project()
@@ -23,7 +28,10 @@ function M.createFeature()
 		return
 	end
 
-	local feature_lowercase_name = utils.convert_to_snake_case(feature_name)
+	local package_name = utils.get_package_name()
+	local feature_name_lowercase = utils.convert_to_snake_case(feature_name)
+
+	cubit.create_cubit(feature_name, feature_directory)
 end
 
 return M

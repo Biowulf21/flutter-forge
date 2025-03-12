@@ -1,4 +1,37 @@
+local utils = require("featureForge.utils")
+
 local M = {}
+local cubit_directory = "data/cubit/"
+
+M.populate_cubit_template = function(feature_name_lowercase)
+	return M.cubit_template:gsub("{{ feature_name }}", feature_name_lowercase)
+end
+
+M.populate_cubit_state_template = function(feature_name_lowercase)
+	return M.cubit_state:gsub("{{ feature_name }}", feature_name_lowercase)
+end
+
+M.create_cubit = function(feature_name, path)
+	local feature_name_lowercase = utils.convert_to_lower_case(feature_name)
+	local snake_case_feature_name = utils.convert_to_snake_case(feature_name)
+
+	local templates = {
+		cubit_template = M.populate_cubit_template(feature_name_lowercase),
+		cubit_state = M.populate_cubit_state_template(feature_name_lowercase),
+	}
+
+	local files = {
+		snake_case_feature_name .. "_cubit.dart",
+		snake_case_feature_name .. "_state.dart",
+	}
+
+	for i, file in ipairs(files) do
+		local file_path = path .. cubit_directory .. file
+		local file_template = templates[i]
+
+		utils.write_to_file(file_path, file_template)
+	end
+end
 
 M.cubit_template = [[
 import 'package:bloc/bloc.dart';
@@ -6,12 +39,12 @@ import 'package:equatable/equatable.dart';
 
 part '{{ feature_name }}_state.dart';
 
-class {{ feature_name}}Cubit extends Cubit<{{ feature_name }}State> {
+class {{ feature_name }}Cubit extends Cubit<{{ feature_name }}State> {
   {{ feature_name }}Cubit({
 	  required this.repository,
   }) : super({{ feature_name }}Initial());
 
-  final Abstract{{feature_name}}Repository repository;
+  final Abstract{{ feature_name }}Repository repository;
 
   void fetch{{ feature_name }}() {
 	  /// Add your logic here
