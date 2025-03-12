@@ -12,34 +12,27 @@ Feature Forge automatically generates the following components for a new feature
 - **Repository**: Abstract and concrete repository implementations
 
 ## Installation
-
-Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
-
-```lua
-use {
-  'yourusername/feature_forge',
-  requires = { 'nvim-lua/plenary.nvim' }
-}
-```
-
 Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
-  'yourusername/feature_forge',
-  dependencies = { 'nvim-lua/plenary.nvim' }
+  'Biowulf21/feature_forge',
+	keys = {
+		{
+			"<leader>cff",
+			"<cmd>lua require('featureForge').createFeature()<CR>",
+			desc = "Create Feature",
+			mode = "n",
+		},
+	},
+
 }
 ```
 
 ## Usage
 
 1. Open your Flutter project in Neovim
-2. Run the command:
-
-```vim
-:lua require('featureForge').createFeature()
-```
-
+2. Run the command
 3. Enter the feature name when prompted (e.g., "UserAuthentication")
 4. Feature Forge will generate all the necessary files in the `lib/features/<feature_name>/` directory
 
