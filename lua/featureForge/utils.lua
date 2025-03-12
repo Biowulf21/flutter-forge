@@ -1,7 +1,7 @@
 local M = {}
 
-function M.convert_to_snake_case(input)
-	return input:gsub("%u", "_%1"):lower()
+M.convert_to_snake_case = function(input)
+	return input:gsub("%u", "_%1"):gsub("^_", ""):lower()
 end
 
 function M.convert_to_lower_case(input)
