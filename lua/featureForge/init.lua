@@ -2,6 +2,13 @@ local utils = require("featureForge.utils")
 local M = {}
 
 function M.createFeature()
+	local is_flutter_project = utils.check_if_flutter_project()
+
+	if not is_flutter_project then
+		error("Cannot run FeatureForge outside of a Flutter project!")
+		return
+	end
+
 	local feature_name = vim.fn.input("Enter feature name: ")
 
 	if feature_name == "" then
