@@ -20,7 +20,6 @@ function M.createFeature()
 		return
 	end
 
-	local current_buff_directory = vim.fn.expand("%:p:h")
 	local feature_folder = utils.get_features_folder()
 	if feature_folder == nil then
 		error("No features directory found. Aborting...")
