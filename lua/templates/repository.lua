@@ -25,10 +25,10 @@ abstract class Abstract{{feature_name}}Repository {
 }
 
 class {{feature_name}}Repository implements Abstract{{feature_name}}Repository {
-	@override
-	Future<void> fetch{{feature_name}}() async {
-		/// Add your logic here
-	}
+  @override
+  Future<void> fetch{{feature_name}}() async {
+	/// Add your logic here
+  }
 }
 ]]
 
