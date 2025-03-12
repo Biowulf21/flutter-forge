@@ -3,11 +3,12 @@ local utils = require("featureForge.utils")
 local M = {}
 local cubit_directory = "data/cubit/"
 
-M.populate_cubit_template = function(feature_name)
+M.populate_cubit_template = function(feature_name, package_name)
 	local feature_name_lowercase = utils.convert_to_lower_case(feature_name)
 	return M.cubit_template
 		:gsub("{{ feature_name_lowercase }}", feature_name_lowercase)
 		:gsub("{{ feature_name }}", feature_name)
+		:gsub("{{ project_name }}", package_name)
 end
 
 M.populate_cubit_state_template = function(feature_name)
@@ -20,8 +21,9 @@ end
 M.create_cubit = function(feature_name, path)
 	local snake_case_feature_name = utils.convert_to_snake_case(feature_name)
 
+	local package_name = utils.get_package_name()
 	local templates = {
-		cubit_template = M.populate_cubit_template(feature_name),
+		cubit_template = M.populate_cubit_template(feature_name, package_name),
 		cubit_state = M.populate_cubit_state_template(feature_name),
 	}
 
@@ -46,6 +48,7 @@ end
 
 M.cubit_template = [[
 import 'package:bloc/bloc.dart';
+import 'package:{{ project_name }}/features/{{ feature_name_lowercase }}/data/repository/{{ feature_name_lowercase }}_repository.dart';
 import 'package:equatable/equatable.dart';
 
 part '{{ feature_name_lowercase }}_state.dart';
