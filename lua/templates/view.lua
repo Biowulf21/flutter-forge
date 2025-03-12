@@ -1,6 +1,7 @@
 local utils = require("featureForge.utils")
 
 local M = {}
+local view_directory = "view/"
 
 M.populate_view_template = function(project_name, feature_name, feature_path)
 	local feature_name_lowercase = utils.convert_to_lower_case(feature_name)
@@ -22,7 +23,7 @@ M.create_view = function(feature_name, path)
 	local template = M.populate_view_template(package_name, feature_name, path)
 
 	local page_file_name = snake_case_feature_name .. "_page.dart"
-	utils.write_to_file(path .. page_file_name, template)
+	utils.write_to_file(path .. view_directory .. page_file_name, template)
 end
 
 M.view_template = [[

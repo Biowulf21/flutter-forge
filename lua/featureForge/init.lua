@@ -6,8 +6,6 @@ local view = require("templates.view")
 local M = {}
 
 local features_directory = "features/"
-local view_directory = "view/"
-local repository_directory = "data/repository/"
 
 function M.createFeature()
 	local is_flutter_project = utils.check_if_flutter_project()
@@ -31,13 +29,17 @@ function M.createFeature()
 		return
 	end
 
-	local package_name = utils.get_package_name()
 	local feature_name_lowercase = utils.convert_to_snake_case(feature_name)
 
 	cubit.create_cubit(feature_name, feature_directory)
 	model.create_model(feature_name, feature_directory)
 	repository.create_repository(feature_name, feature_directory)
 	view.create_view(feature_name, feature_directory)
+
+	print("Feature created successfully!")
+
+	-- Open the the created page file
+	vim.cmd("e " .. feature_directory .. feature_name_lowercase .. "/view/" .. feature_name_lowercase .. "_page.dart")
 end
 
 return M

@@ -1,5 +1,7 @@
 local utils = require("featureForge.utils")
+
 local M = {}
+local model_directory = "data/model/"
 
 M.populate_model_template = function(feature_name)
 	return M.model_template:gsub("{{ feature_name }}", feature_name)
@@ -8,20 +10,13 @@ end
 M.create_model = function(feature_name, path)
 	local snake_case_feature_name = utils.convert_to_snake_case(feature_name)
 
-	local templates = {
-		model_template = M.populate_model_template(feature_name),
-	}
+	local templates = M.populate_model_template(feature_name)
 
-	local files = {
-		snake_case_feature_name .. "_model.dart",
-	}
+	local file = snake_case_feature_name .. "_model.dart"
 
-	for i, file in ipairs(files) do
-		local file_path = path .. file
-		local file_template = templates[i]
+	local file_path = path .. model_directory .. file
 
-		utils.write_to_file(file_path, file_template)
-	end
+	utils.write_to_file(file_path, templates)
 end
 
 M.model_template = [[
