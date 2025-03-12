@@ -22,7 +22,7 @@ end
 M.model_template = [[
 import 'package:equatable/equatable.dart';
 
-class {{ feature_name }} extends Equatable {
+class {{ feature_name }}Model extends Equatable {
 	const {{ feature_name }}();
 
 	@override
