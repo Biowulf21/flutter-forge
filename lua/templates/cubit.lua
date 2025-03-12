@@ -56,7 +56,7 @@ part '{{ feature_name_lowercase }}_state.dart';
 class {{ feature_name }}Cubit extends Cubit<{{ feature_name }}State> {
   {{ feature_name }}Cubit({
     required this.repository,
-  }) : super({{ feature_name }}Initial());
+  }) : super(const {{ feature_name }}Initial());
 
   final Abstract{{ feature_name }}Repository repository;
 
@@ -77,7 +77,7 @@ class {{ feature_name }}State extends Equatable {
   List<Object> get props => [];
 
   {{ feature_name }}State copyWith() {
-    return {{ feature_name }}State();
+    return const {{ feature_name }}State();
   }
 }
 

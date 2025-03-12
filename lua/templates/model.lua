@@ -23,10 +23,10 @@ M.model_template = [[
 import 'package:equatable/equatable.dart';
 
 class {{ feature_name }}Model extends Equatable {
-	const {{ feature_name }}();
+  const {{ feature_name }}Model();
 
-	@override
-	List<Object> get props => [];
+  @override
+  List<Object> get props => [];
 }
 ]]
 

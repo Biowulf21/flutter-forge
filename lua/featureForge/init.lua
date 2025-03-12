@@ -31,8 +31,6 @@ function M.createFeature()
 		return
 	end
 
-	local feature_name_lowercase = utils.convert_to_snake_case(feature_name)
-
 	cubit.create_cubit(feature_name, feature_path)
 	model.create_model(feature_name, feature_path)
 	repository.create_repository(feature_name, feature_path)
