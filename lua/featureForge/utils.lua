@@ -5,12 +5,12 @@ function M.convert_to_snake_case(input)
 end
 
 function M.convert_to_lower_case(input)
-	return input:lower()
+	return input:gsub("^_", ""):lower()
 end
 
 -- Check if the current project is a flutter project by recursively
 -- checking if the current directory has a pubspec.yaml file
-local function get_root_directory()
+M.get_root_directory = function()
 	local current_buff_directory = vim.fn.expand("%:p:h")
 
 	local max_depth = 15
@@ -27,6 +27,16 @@ local function get_root_directory()
 	end
 
 	return nil
+end
+
+M.get_features_folder = function()
+	local root_directory = M.get_root_directory()
+	if root_directory == nil then
+		error("No Package Found. Aborting...")
+		return nil
+	end
+
+	return root_directory .. "/lib/features/"
 end
 
 local function find_value_in_yaml_file(path, key)
@@ -56,7 +66,7 @@ local function find_value_in_yaml_file(path, key)
 end
 
 function M.check_if_flutter_project()
-	local root_directory = get_root_directory()
+	local root_directory = M.get_root_directory()
 
 	if root_directory == nil then
 		return false
@@ -66,7 +76,7 @@ function M.check_if_flutter_project()
 end
 
 function M.get_package_name()
-	local root_directory = get_root_directory()
+	local root_directory = M.get_root_directory()
 	if root_directory == nil then
 		error("No Package Found. Aborting...")
 		return nil

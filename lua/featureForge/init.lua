@@ -5,8 +5,6 @@ local repository = require("templates.repository")
 local view = require("templates.view")
 local M = {}
 
-local features_directory = "features/"
-
 function M.createFeature()
 	local is_flutter_project = utils.check_if_flutter_project()
 
@@ -23,23 +21,28 @@ function M.createFeature()
 	end
 
 	local current_buff_directory = vim.fn.expand("%:p:h")
-	local feature_directory = current_buff_directory .. "/features/" .. feature_name
-	if feature_directory == "" then
+	local feature_folder = utils.get_features_folder()
+	if feature_folder == nil then
+		error("No features directory found. Aborting...")
+		return
+	end
+	local feature_path = feature_folder .. feature_name .. "/"
+	if feature_folder == "" then
 		error("Feature directory cannot be empty")
 		return
 	end
 
 	local feature_name_lowercase = utils.convert_to_snake_case(feature_name)
 
-	cubit.create_cubit(feature_name, feature_directory)
-	model.create_model(feature_name, feature_directory)
-	repository.create_repository(feature_name, feature_directory)
-	view.create_view(feature_name, feature_directory)
+	cubit.create_cubit(feature_name, feature_path)
+	model.create_model(feature_name, feature_path)
+	repository.create_repository(feature_name, feature_path)
+	local view_path = view.create_view(feature_name, feature_path)
 
 	print("Feature created successfully!")
 
 	-- Open the the created page file
-	vim.cmd("e " .. feature_directory .. feature_name_lowercase .. "/view/" .. feature_name_lowercase .. "_page.dart")
+	vim.cmd("e " .. view_path)
 end
 
 return M

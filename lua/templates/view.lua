@@ -24,6 +24,8 @@ M.create_view = function(feature_name, path)
 
 	local page_file_name = snake_case_feature_name .. "_page.dart"
 	utils.write_to_file(path .. view_directory .. page_file_name, template)
+
+	return path .. view_directory .. page_file_name
 end
 
 M.view_template = [[
