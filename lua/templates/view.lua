@@ -39,18 +39,18 @@ import 'package:{{ project_name }}/{{ feature_path }}/data/repository/{{ feature
 class {{ feature_name }}Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-      create: (context) => Abstract{{ feature_name }}Repository(),
+    return RepositoryProvider<Abstract{{ feature_name }}Repository()>(
+      create: (context) => {{ feature_name }}Repository(),
       child: BlocProvider(
         create: (context) => {{ feature_name }}Cubit(
-          repository: context.read<{{ feature_name }}Repository>(),
+          repository: context.read<Abstract{{ feature_name }}Repository>(),
         ),
         child: Scaffold(
           appBar: AppBar(
             title: Text('{{ feature_name }}'),
           ),
           body: SafeArea(
-            child: {{feature_name}}View(),
+            child: {{ feature_name }}View(),
           ),
         ),
       ),
