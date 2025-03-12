@@ -37,31 +37,31 @@ import 'package:{{ project_name }}/{{ feature_path }}/data/repository/{{ feature
 
 @RoutePage()
 class {{ feature_name }}Page extends StatelessWidget {
-	@override
-	Widget build(BuildContext context) {
-		return RepositoryProvider(
-			create: (context) => Abstract{{ feature_name }}Repository(),
-			child: BlocProvider(
-				create: (context) => {{ feature_name }}Bloc(
-					repository: context.read<{{ feature_name }}Repository>(),
-				),
-				child: Scaffold(
-					appBar: AppBar(
-						title: Text('{{ feature_name }}'),
-					),
-					body: SafeArea(
-						child: {{feature_name}}View(),
-					),
-				),
-			),
-		);
-	}
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider(
+      create: (context) => Abstract{{ feature_name }}Repository(),
+      child: BlocProvider(
+        create: (context) => {{ feature_name }}Cubit(
+          repository: context.read<{{ feature_name }}Repository>(),
+        ),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text('{{ feature_name }}'),
+          ),
+          body: SafeArea(
+            child: {{feature_name}}View(),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class {{ feature_name }}View extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<{{ feature_name }}Bloc, {{ feature_name }}State>(
+    return BlocBuilder<{{ feature_name }}Cubit, {{ feature_name }}State>(
       builder: (context, state) {
         return Placeholder();
       },
