@@ -1,5 +1,8 @@
 local utils = require("featureForge.utils")
 local cubit = require("templates.cubit")
+local model = require("templates.model")
+local repository = require("templates.repository")
+local view = require("templates.view")
 local M = {}
 
 local features_directory = "features/"
@@ -32,6 +35,9 @@ function M.createFeature()
 	local feature_name_lowercase = utils.convert_to_snake_case(feature_name)
 
 	cubit.create_cubit(feature_name, feature_directory)
+	model.create_model(feature_name, feature_directory)
+	repository.create_repository(feature_name, feature_directory)
+	view.create_view(feature_name, feature_directory)
 end
 
 return M

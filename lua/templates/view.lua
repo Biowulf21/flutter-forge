@@ -1,7 +1,28 @@
+local utils = require("featureForge.utils")
+
 local M = {}
 
-function M.create_view(feature_name, feature_name_lowercase, feature_path, project_name)
-	return M.view_template()
+M.populate_view_template = function(project_name, feature_name, feature_path)
+	local feature_name_lowercase = utils.convert_to_lower_case(feature_name)
+	return M.view_template
+		:gsub("{{ feature_name }}", feature_name)
+		:gsub("{{ project_name }}", project_name)
+		:gsub("{{ feature_path }}", feature_path)
+		:gsub("{{ feature_name_lowercase }}", feature_name_lowercase)
+end
+
+M.create_view = function(feature_name, path)
+	local snake_case_feature_name = utils.convert_to_snake_case(feature_name)
+	local package_name = utils.get_package_name()
+
+	if package_name == nil then
+		error("Could not find package name in pubspec.yaml")
+	end
+
+	local template = M.populate_view_template(package_name, feature_name, path)
+
+	local page_file_name = snake_case_feature_name .. "_page.dart"
+	utils.write_to_file(path .. page_file_name, template)
 end
 
 M.view_template = [[
