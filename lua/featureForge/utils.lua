@@ -108,4 +108,24 @@ M.get_current_buffer_path = function()
 	return buf_directory
 end
 
+M.run_dart_fix = function()
+	-- Get the project root directory for running dart fix
+	local root_dir = M.get_root_directory()
+
+	local job_id = vim.fn.jobstart("cd " .. root_dir .. " && dart fix --apply", {
+		on_exit = function(_, exit_code, _)
+			if exit_code == 0 then
+				print("Dart fix completed successfully")
+			else
+				print("Dart fix failed with exit code: " .. exit_code)
+			end
+		end,
+	})
+	if job_id == 0 then
+		print("Error: Invalid arguments for job")
+	elseif job_id == -1 then
+		print("Error: Command not executable")
+	end
+end
+
 return M
