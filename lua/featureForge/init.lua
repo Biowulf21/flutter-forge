@@ -19,17 +19,19 @@ function M.createFeature()
 		error("Feature name cannot be empty")
 		return
 	end
+	local current_buff_path = utils.get_current_buffer_path()
+	local feature_path = vim.fn.input("Feature path: ", current_buff_path .. "feature/")
 
-	local feature_folder = utils.get_features_folder()
-	if feature_folder == nil then
-		error("No features directory found. Aborting...")
-		return
-	end
-	local feature_path = feature_folder .. feature_name .. "/"
-	if feature_folder == "" then
-		error("Feature directory cannot be empty")
-		return
-	end
+	-- local feature_folder = utils.get_features_folder()
+	-- if feature_folder == nil then
+	-- 	error("No features directory found. Aborting...")
+	-- 	return
+	-- end
+	-- local feature_path = feature_folder .. feature_name .. "/"
+	-- if feature_folder == "" then
+	-- 	error("Feature directory cannot be empty")
+	-- 	return
+	-- end
 
 	cubit.create_cubit(feature_name, feature_path)
 	model.create_model(feature_name, feature_path)

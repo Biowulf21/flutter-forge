@@ -102,4 +102,10 @@ function M.write_to_file(path, content)
 	feature_file:close()
 end
 
+M.get_current_buffer_path = function()
+	local buf_path = vim.fn.expand("%")
+	local buf_directory = buf_path:match("(.*[/\\])")
+	return buf_directory
+end
+
 return M
