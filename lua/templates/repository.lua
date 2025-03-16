@@ -1,4 +1,4 @@
-local utils = require("featureForge.utils")
+local utils = require("flutterForge.utils")
 
 local M = {}
 local repository_directory = "data/repository/"
