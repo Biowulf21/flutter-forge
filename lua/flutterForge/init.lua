@@ -1,4 +1,4 @@
-local utils = require("featureForge.utils")
+local utils = require("flutterForge.utils")
 local cubit = require("templates.cubit")
 local model = require("templates.model")
 local repository = require("templates.repository")
