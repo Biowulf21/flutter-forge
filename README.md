@@ -16,7 +16,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
-  'Biowulf21/feature-forge',
+  'Biowulf21/flutter-forge',
 	keys = {
 		{
 			"<leader>cff",
